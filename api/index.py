@@ -23,17 +23,16 @@ def root():
 
 
 @app.post("/scrape")
-def scrape():
+async def scrape():
     try:
-        all_books = run_pipeline(BASE_URL)
+        data = await scrape_all()
 
-        # Optional cleaning (LLM disabled or enabled)
-        cleaned = clean_data(all_books[:50])  # limit for speed
+        # ✅ SAFETY: always return list
+        if not data:
+            return {"data": []}
 
-        return {
-            "count": len(cleaned),
-            "data": cleaned
-        }
+        return {"data": data}
 
     except Exception as e:
-        return {"error": str(e)}
+        print("SCRAPE ERROR:", e)
+        return {"data": []}   # ✅ NEVER return error object

@@ -8,7 +8,6 @@ export default function Home() {
   const [error, setError] = useState<string | null>(null);
   const [mounted, setMounted] = useState(false);
 
-  // Fix hydration mismatch
   useEffect(() => {
     setMounted(true);
   }, []);
@@ -33,20 +32,18 @@ export default function Home() {
 
       const result = await res.json();
 
-        if (!result) {
-          throw new Error("No response from API");
-        }
+      if (!result) {
+        throw new Error("No response from API");
+      }
 
-        // Handle multiple formats safely
-        const extractedData = result.data || result;
+      let extractedData = result?.data;
 
-        if (!Array.isArray(extractedData)) {
-          throw new Error("Invalid data format");
-        }
+      if (!Array.isArray(extractedData)) {
+        console.warn("Invalid API format:", result);
+        extractedData = [];
+      }
 
-setData(extractedData);
-
-      setData(result.data);
+      setData(extractedData);
     } catch (err: any) {
       console.error(err);
       setError(err.message || "Something went wrong");
@@ -68,21 +65,18 @@ setData(extractedData);
         {loading ? "Scraping..." : "Run Scraper"}
       </button>
 
-      {/* Error Message */}
       {error && (
         <p className="text-red-500 mt-4">
           ❌ {error}
         </p>
       )}
 
-      {/* Loading */}
       {loading && (
         <p className="mt-4 text-gray-600">
           ⏳ Scraping data... (first run may take ~30s)
         </p>
       )}
 
-      {/* Data Grid */}
       <div className="mt-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {data.slice(0, 20).map((item, index) => (
           <div
