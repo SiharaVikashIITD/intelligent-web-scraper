@@ -29,8 +29,8 @@ Scraper → Parser → Data Cleaner → LLM Validation (Optional) → Output
 - ## Screenshots
 
 ### Terminal Output
-![Terminal Output](assets/terminal_output.png)
-
+![Terminal Output](assets/terminal_output1.png)
+![Terminal Output](assets/terminal_output2.png)
 ### CSV Data Preview
 ![CSV Preview](assets/csv_preview.png)
 
