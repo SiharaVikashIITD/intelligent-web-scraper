@@ -15,7 +15,7 @@ async def scrape_all():
     all_data = []
 
     # ✅ Limit concurrency (important for Render)
-    semaphore = asyncio.Semaphore(5)
+    semaphore = asyncio.Semaphore(3)
 
     async def sem_fetch(url):
         async with semaphore:
@@ -32,6 +32,8 @@ async def scrape_all():
 
         if not html:
             logger.error(f"Failed to load page: {current_url}")
+            break
+        if len(all_data) >= 50:
             break
 
         # ✅ Extract links
@@ -55,7 +57,7 @@ async def scrape_all():
                 except Exception as e:
                     logger.error(f"Parsing error: {e}")
         # ✅ ADD THIS BLOCK HERE (VERY IMPORTANT POSITION)
-        if len(all_data) >=MAX_BOOKS:
+        if len(all_data) >=50:
             logger.info("Stopping early (limit reached)")
             break
 

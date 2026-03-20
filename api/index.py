@@ -27,12 +27,11 @@ async def scrape():
     try:
         data = await scrape_all()
 
-        # ✅ SAFETY: always return list
         if not data:
             return {"data": []}
 
-        return {"data": data}
+        return {"data": data[:50]}
 
     except Exception as e:
         print("SCRAPE ERROR:", e)
-        return {"data": []}   # ✅ NEVER return error object
+        return {"data": []}
