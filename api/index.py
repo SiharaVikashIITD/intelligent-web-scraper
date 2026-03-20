@@ -1,9 +1,8 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-
 from scraper.fetcher import fetch_page
 from scraper.parser import parse_books
-from scraper.pipeline import run_pipeline
+from scraper.pipeline import scrape_all
 from scraper.validator import clean_data
 from scraper.config import BASE_URL
 
