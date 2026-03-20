@@ -3,16 +3,19 @@ from urllib.parse import urljoin
 
 BASE = "https://books.toscrape.com/"
 
+# ✅ Extract links from listing page
 def extract_book_links(html):
     soup = BeautifulSoup(html, "lxml")
     links = []
 
     for a in soup.select("h3 a"):
         href = a["href"]
-        links.append(href)   # return relative links only
+        links.append(href)  # keep relative links
 
     return links
 
+
+# ✅ Parse single book page
 def parse_book(html):
     soup = BeautifulSoup(html, "lxml")
 
@@ -26,9 +29,27 @@ def parse_book(html):
         "availability": availability
     }
 
+
+# ✅ NEW: Parse multiple books (for pipeline compatibility)
+def parse_books(html_list):
+    books = []
+
+    for html in html_list:
+        try:
+            book = parse_book(html)
+            books.append(book)
+        except Exception:
+            continue  # skip bad pages
+
+    return books
+
+
+# ✅ Pagination
 def next_page(html):
     soup = BeautifulSoup(html, "lxml")
     nxt = soup.select_one(".next a")
+
     if nxt:
         return urljoin(BASE + "catalogue/", nxt["href"])
+
     return None
