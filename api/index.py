@@ -7,7 +7,7 @@ app = FastAPI()
 
 @app.get("/")
 def home():
-    return {"status": "Scraper API running"}
+    return {"message": "API is live 🚀"}
 
 @app.get("/scrape")
 async def scrape():
