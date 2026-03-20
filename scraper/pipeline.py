@@ -15,7 +15,7 @@ async def scrape_all():
     all_data = []
 
     # ✅ Limit concurrency (important for Render)
-    semaphore = asyncio.Semaphore(8)
+    semaphore = asyncio.Semaphore(5)
 
     async def sem_fetch(url):
         async with semaphore:

@@ -33,9 +33,18 @@ export default function Home() {
 
       const result = await res.json();
 
-      if (!result || !result.data) {
-        throw new Error("Invalid response from API");
-      }
+        if (!result) {
+          throw new Error("No response from API");
+        }
+
+        // Handle multiple formats safely
+        const extractedData = result.data || result;
+
+        if (!Array.isArray(extractedData)) {
+          throw new Error("Invalid data format");
+        }
+
+setData(extractedData);
 
       setData(result.data);
     } catch (err: any) {
