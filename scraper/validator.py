@@ -4,7 +4,7 @@ import re
 import time
 
 # Toggle LLM usage
-USE_LLM = True  # set False for deployment if needed
+USE_LLM = False  # set False for deployment if needed
 
 
 def extract_json_strict(text):
