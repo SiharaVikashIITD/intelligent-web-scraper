@@ -1,20 +1,31 @@
 from fastapi import FastAPI
-import asyncio
-from scraper.pipeline import scrape_all
-from scraper.validator import clean_data
+from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI()
 
+# CORS FIX (CRITICAL)
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],   # allow all (for now)
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
 @app.get("/")
-def home():
+def root():
     return {"message": "API is live 🚀"}
 
-@app.get("/scrape")
-async def scrape():
-    data = await scrape_all()
-    data = clean_data(data)
-
+# VERY IMPORTANT: allow POST
+@app.post("/scrape")
+def scrape():
+    # TEMP TEST RESPONSE (to debug)
     return {
-        "total": len(data),
-        "sample": data[:10]
+        "data": [
+            {
+                "title": "Test Book",
+                "price": 20,
+                "availability": "In stock"
+            }
+        ]
     }
