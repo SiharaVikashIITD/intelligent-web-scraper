@@ -1,0 +1,8 @@
+playwright
+beautifulsoup4
+lxml
+pandas
+tenacity
+fastapi
+uvicorn
+requests
