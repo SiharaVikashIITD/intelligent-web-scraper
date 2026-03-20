@@ -26,6 +26,14 @@ Scraper → Parser → Data Cleaner → LLM Validation (Optional) → Output
 
 - `output/data.csv`
 - `output/data.json`
+- ## Screenshots
+
+### Terminal Output
+![Terminal Output](assets/terminal_output1.png)
+![Terminal Output](assets/terminal_output2.png)
+### CSV Data Preview
+![CSV Preview](assets/csv_preview.png)
+
 
 ---
 
